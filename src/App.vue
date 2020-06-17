@@ -1,28 +1,61 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+	<div id="app">
+		<SearchPane />
+		<FilePane />
+		<PreviewPane />
+	</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import SearchPane from './components/SearchPane'
+import FilePane from './components/FilePane'
+import PreviewPane from './components/PreviewPane'
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+	name: 'App',
+	components: {
+		SearchPane,
+		FilePane,
+		PreviewPane
+	}
 }
 </script>
 
 <style>
+* {
+	box-sizing: border-box;
+}
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+	width: 100vw;
+	height: 100vh;
+	min-width: 460px;
+	min-height: 260px;
+
+	display: grid;
+	grid-template-rows: 200px 1fr;
+	grid-template-columns: 360px 1fr;
+
+	font-family: BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	color: #333;
+}
+
+.search-pane {
+	grid-row: 1;
+	grid-column: 1;
+}
+.file-pane {
+	grid-row: 2;
+	grid-column: 1;
+}
+.preview-pane {
+	grid-row: 1 / span 2;
+	grid-column: 2;
 }
 </style>
