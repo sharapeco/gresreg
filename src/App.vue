@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<SearchPane />
-		<FilePane />
+		<FilePane :targets="targets" />
 		<PreviewPane />
 	</div>
 </template>
@@ -17,6 +17,11 @@ export default {
 		SearchPane,
 		FilePane,
 		PreviewPane
+	},
+	data () {
+		return {
+			targets: []
+		}
 	}
 }
 </script>

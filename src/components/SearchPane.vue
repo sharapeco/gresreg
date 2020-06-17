@@ -2,12 +2,12 @@
 	<section class="search-pane">
 		<div class="search-group">
 			<label for="search-input">Search</label>
-			<input type="text" id="search-input">
+			<input type="text" id="search-input" />
 			<button type="button">Search</button>
 		</div>
 		<div class="search-group">
 			<label for="replace-input">Replace</label>
-			<input type="text" id="replace-input">
+			<input type="text" id="replace-input" />
 			<button type="button">Replace</button>
 		</div>
 		<div class="search-option-list">
