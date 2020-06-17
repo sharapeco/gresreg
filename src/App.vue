@@ -19,8 +19,10 @@ export default {
 		PreviewPane
 	},
 	data () {
+		const argv = process.argv
+		console.log(argv)
 		return {
-			targets: []
+			targets: argv
 		}
 	}
 }

@@ -11,6 +11,21 @@
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
+  "build": {
+    "appId": "cc.suzume.gresreg",
+    "productName": "Gresreg",
+    "copyright": "Gresreg is licensed under the MIT License",
+    "fileAssociations": [
+      {
+        "ext": "md",
+        "name": "Markdown",
+        "description": "Markdown document",
+        "mimeType": "text/markdown",
+        "role": "Editor",
+        "isPackage": false
+      }
+    ]
+  },
   "main": "background.js",
   "dependencies": {
     "core-js": "^3.6.5",
