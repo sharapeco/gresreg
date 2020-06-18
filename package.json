@@ -1,6 +1,9 @@
 {
   "name": "gresreg",
   "version": "0.1.0",
+  "description": "Simple grep & replace tool",
+  "author": "sharapeco",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,21 +13,6 @@
     "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
-  },
-  "build": {
-    "appId": "cc.suzume.gresreg",
-    "productName": "Gresreg",
-    "copyright": "Gresreg is licensed under the MIT License",
-    "fileAssociations": [
-      {
-        "ext": "md",
-        "name": "Markdown",
-        "description": "Markdown document",
-        "mimeType": "text/markdown",
-        "role": "Editor",
-        "isPackage": false
-      }
-    ]
   },
   "main": "background.js",
   "dependencies": {
