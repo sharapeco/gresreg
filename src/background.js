@@ -1,44 +1,26 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
-import {
-	createProtocol
-	/* installVueDevtools */
-} from 'vue-cli-plugin-electron-builder/lib'
+import { app, protocol, globalShortcut } from 'electron'
+import { Gresreg } from './gresreg'
+import global from './global'
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let win
+let gresreg
 
 // Scheme must be registered before the app is ready
-protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: true, standard: true } }])
+protocol.registerSchemesAsPrivileged([
+	{ scheme: 'app', privileges: { secure: true, standard: true } }
+])
 
-function createWindow () {
-	// Create the browser window.
-	win = new BrowserWindow({
-		width: 800,
-		height: 600,
-		webPreferences: {
-		// Use pluginOptions.nodeIntegration, leave this alone
-		// See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-			nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
-		}
-	})
-
-	if (process.env.WEBPACK_DEV_SERVER_URL) {
-		// Load the url of the dev server if in development mode
-		win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-		if (!process.env.IS_TEST) win.webContents.openDevTools()
-	} else {
-		createProtocol('app')
-		// Load the index.html when not in development
-		win.loadURL('app://./index.html')
-	}
-
-	win.on('closed', () => {
-		win = null
-	})
+/**
+ * 生の argv をちゃんとファイルごとに分割する
+ * @param {string[]} argv 引数リスト
+ * @param {string} cws 作業ディレクトリ
+ */
+function extractFilesFromArgv (argv, cwd) {
+	console.log('extractFilesFromArgv at ', cwd, ' / Files: ', argv.join(' | '))
+	return argv
 }
 
 // Quit when all windows are closed.
@@ -53,14 +35,24 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
 	// On macOS it's common to re-create a window in the app when the
 	// dock icon is clicked and there are no other windows open.
-	if (win === null) {
-		createWindow()
+	if (gresreg === null) {
+		gresreg = new Gresreg()
 	}
 })
 
 app.on('second-instance', (event, argv, cwd) => {
 	console.log('Second instance was initialized.')
-	console.log(`> ${cwd} ${argv.join(' ')}`)
+	const files = extractFilesFromArgv(argv, cwd)
+	gresreg.handleFiles(files)
+})
+
+app.on('open-file', (event, path) => {
+	event.preventDefault()
+	if (gresreg) {
+		gresreg.handleFiles([path])
+	} else {
+		global.filesToOpen.push(path)
+	}
 })
 
 // This method will be called when Electron has finished
@@ -81,7 +73,7 @@ app.on('ready', async () => {
 		// }
 
 	}
-	createWindow()
+	gresreg = new Gresreg()
 })
 
 // Exit cleanly on request from parent process in development mode.
